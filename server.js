@@ -76,7 +76,7 @@ function findRedirect(code, req, res) {
                     var host = req.get('host');
                     res.json({
                         "original_url": req.params[0],
-                        "short_url": req.protocol + '://' + host + '/' + code
+                        "short_url": req.secure ? 'https' : 'http' + '://' + host + '/' + code
                     });
                 }
             });
