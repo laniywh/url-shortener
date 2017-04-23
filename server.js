@@ -17,12 +17,21 @@ var Redirect = mongoose.model('Redirect', {
 
 
 // Create short URL
-app.get(/new\/(https?:\/\/.+)/, function (req, res) {
+app.get(/new\/(.+)/, function (req, res) {
 
-    var code = generateCode();
-    console.log('code: ' + code);
+    // validate url
+    if (req.params[0].match(/https?:\/\/.+\..+/)) {
 
-    findRedirect(code, req, res);
+        var code = generateCode();
+        console.log('code: ' + code);
+
+        findRedirect(code, req, res);
+
+    } else {
+
+        res.json({ "error": "Wrong url format, make sure you have a valid protocol and real site." });
+
+    }
 
 });
 
@@ -67,7 +76,7 @@ function findRedirect(code, req, res) {
                     var host = req.get('host');
                     res.json({
                         "original_url": req.params[0],
-                        "short_url": host + '/' + code
+                        "short_url": req.protocol + '://' + host + '/' + code
                     });
                 }
             });
