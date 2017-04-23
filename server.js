@@ -74,9 +74,10 @@ function findRedirect(code, req, res) {
                     });
                 } else {
                     var host = req.get('host');
+                    var protocol = req.secure ? 'https' : 'http';
                     res.json({
                         "original_url": req.params[0],
-                        "short_url": req.secure ? 'https' : 'http' + '://' + host + '/' + code
+                        "short_url": protocol + '://' + host + '/' + code
                     });
                 }
             });
@@ -103,9 +104,12 @@ app.get('/:code', function (req, res) {
     });
 });
 
+app.use('/assets', express.static(__dirname + '/public'));
 
 app.get('/', function(req, res) {
-    res.send('hello world');
+    var host = req.get('host');
+    var protocol = req.secure ? 'https' : 'http';
+    res.render('index', { site: protocol + '://' + host });
 });
 
 app.listen(port);
