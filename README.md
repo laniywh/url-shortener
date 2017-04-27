@@ -2,6 +2,8 @@
 
 This is a URL shortener API built for [a freeCodeCamp project](https://www.freecodecamp.com/challenges/url-shortener-microservice).
 
+[Demo](https://mighty-shore-24898.herokuapp.com/)
+
 ### User stories:
 
 1. I can pass a URL as a parameter and I will receive a shortened URL in the JSON response.
